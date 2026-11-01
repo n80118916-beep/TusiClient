@@ -1,0 +1,11 @@
+[
+{
+  "modid": "tusiclient",
+  "name": "TusiClient",
+  "description": "Tusi Client Mod",
+  "version": "1.0",
+  "mcversion": "1.7.10",
+  "authorList": ["Tusi"],
+  "credits": "Tusi"
+}
+]
