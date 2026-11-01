@@ -19,11 +19,13 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
 
-    # ФИКС: Скачиваем клиент 1.7.10 вручную и кладем в кэш Gradle
-    - name: Фикс скачивания клиента 1.7.10 (Мертвая ссылка S3)
+    # ФИКС: Скачиваем клиент через curl (он умеет обходить перенаправления)
+    - name: Фикс скачивания клиента 1.7.10
       run: |
         mkdir -p ~/.gradle/caches/minecraft/net/minecraft/minecraft/1.7.10
-        wget -q https://launcher.mojang.com/v1/objects/e80d9b3bf564b1b04e086fb30bca035f6bfd9d9a/client.jar -O ~/.gradle/caches/minecraft/net/minecraft/minecraft/1.7.10/minecraft-1.7.10.jar
+        curl -L -o ~/.gradle/caches/minecraft/net/minecraft/minecraft/1.7.10/minecraft-1.7.10.jar https://launcher.mojang.com/v1/objects/e80d9b3bf564b1b04e086fb30bca035f6bfd9d9a/client.jar
+        echo "Файл успешно скачан, размер:"
+        ls -lh ~/.gradle/caches/minecraft/net/minecraft/minecraft/1.7.10/minecraft-1.7.10.jar
 
     - name: Устанавливаем Gradle 2.14.1 (без кэша)
       uses: gradle/actions/setup-gradle@v3
