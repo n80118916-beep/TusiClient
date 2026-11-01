@@ -5,7 +5,6 @@ buildscript {
         maven { name = "sonatype"; url = "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        // ИСПОЛЬЗУЕМ ФОРК, КОТОРЫЙ НЕ СТРАДАЕТ ОТ МЕРТВЫХ ССЫЛОК
         classpath ('com.anatawa12.forge:ForgeGradle:1.2-1.0.+') {
             changing = true
         }
