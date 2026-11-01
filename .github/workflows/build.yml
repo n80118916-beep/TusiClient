@@ -19,18 +19,12 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
 
+    # anatawa12 отлично работает со старым Gradle 2.14.1
     - name: Устанавливаем Gradle 2.14.1
       uses: gradle/actions/setup-gradle@v3
       with:
         gradle-version: '2.14.1'
         cache-disabled: true
-
-    # ФИКС: Теперь мы кладем файл ПОСЛЕ установки Gradle, чтобы он не удалился
-    - name: Фикс мертвой ссылки Minecraft 1.7.10
-      run: |
-        mkdir -p ~/.gradle/caches/minecraft/net/minecraft/minecraft/1.7.10
-        curl -L -o ~/.gradle/caches/minecraft/net/minecraft/minecraft/1.7.10/minecraft-1.7.10.jar https://launcher.mojang.com/v1/objects/e80d9b3bf564b1b04e086fb30bca035f6bfd9d9a/client.jar
-        cp ~/.gradle/caches/minecraft/net/minecraft/minecraft/1.7.10/minecraft-1.7.10.jar ~/.gradle/caches/minecraft/net/minecraft/minecraft/1.7.10/1.7.10.jar
 
     - name: Собираем мод
       run: gradle build --stacktrace
