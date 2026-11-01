@@ -38,9 +38,8 @@ public class ModuleManager {
     private static long lastPot = 0;
 
     public ModuleManager() {
-        friends.add("Tusi"); // Твой ник
+        friends.add("Tusi");
 
-        // Combat
         modules.add(new Module("Auto Explosion", "Ставит и взрывает ТНТ", "Combat", false));
         modules.add(new Module("Friend Protect", "Не бьет друзей", "Combat", true));
         modules.add(new Module("Auto GApple", "Ест золотое яблоко", "Combat", false));
@@ -53,7 +52,6 @@ public class ModuleManager {
         modules.add(new Module("Hitboxes", "Увеличивает хитбоксы", "Combat", false));
         modules.add(new Module("Velocity", "Убирает откидывание", "Combat", false));
         
-        // Render
         modules.add(new Module("Fullbright", "Яркость", "Render", true));
         modules.add(new Module("ESP", "Подсветка игроков", "Render", false));
         modules.add(new Module("Tracers", "Линии до игроков", "Render", false));
@@ -132,12 +130,12 @@ public class ModuleManager {
                     int y = MathHelper.floor_double(target.posY);
                     int z = MathHelper.floor_double(target.posZ);
                     if (mc.theWorld.getBlock(x, y, z) == Blocks.air) {
-                        mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem(), x, y, z, 1, new Vec3(x, y, z));
+                        mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem(), x, y, z, 1, Vec3.createVectorHelper(x, y, z));
                     }
                     int flintSlot = findItemInHotbar(Items.flint_and_steel);
                     if (flintSlot != -1) {
                         mc.thePlayer.inventory.currentItem = flintSlot;
-                        mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem(), x, y, z, 1, new Vec3(x, y, z));
+                        mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem(), x, y, z, 1, Vec3.createVectorHelper(x, y, z));
                     }
                 }
             }
@@ -238,8 +236,9 @@ public class ModuleManager {
             if (nametags) {
                 GL11.glPushMatrix();
                 GL11.glTranslated(x, y + player.height + 0.5, z);
-                GL11.glRotatef(-mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
-                GL11.glRotatef(mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+                // ИСПРАВЛЕНО ЗДЕСЬ: RenderManager.instance вместо mc.getRenderManager()
+                GL11.glRotatef(-RenderManager.instance.playerViewY, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(RenderManager.instance.playerViewX, 1.0F, 0.0F, 0.0F);
                 float scale = 0.02666667F;
                 GL11.glScalef(-scale, -scale, scale);
                 GL11.glDisable(GL11.GL_LIGHTING);
@@ -386,4 +385,4 @@ public class ModuleManager {
             this.name = name; this.desc = desc; this.category = category; this.enabled = enabled;
         }
     }
-}
+            }
